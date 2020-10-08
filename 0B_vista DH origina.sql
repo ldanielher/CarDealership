@@ -1,12 +1,6 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
 ---**** ORIGINAL ******
 
-ALTER VIEW [dbo].[v_vehiculos_master_mov_DH] AS
+CREATE VIEW [dbo].[v_vehiculos_master_mov_DH] AS
 select 
     VH.CODIGO AS VIN
     ,VH.DES_MARCA AS Marca
