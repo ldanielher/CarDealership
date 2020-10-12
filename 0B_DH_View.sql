@@ -28,7 +28,7 @@ select
             when dsal.sw = '11' ---------------------------/ Sw del documento de salida es 11 (Salidas Inv)
             then 'ACTIVO FIJO' 
             else 
-                CASE WHEN   dsal.nit = '800039439' ------------------------/ El doc de salida tiene el Nit de Demcautos SA
+                CASE WHEN   dsal.nit = 'XXXXXXXXX' ------------------------/ El doc de salida tiene un Nit especifico
                             and vhd.numero_ent is null --------------------/ No tiene devolucion (Casos en que se devuelve el vehiculo y el siguiente mov es el que debe quedar)
                 THEN 'ACTIVO FIJO'
                 ELSE 'FACTURADO CON DEVOLUCION'
