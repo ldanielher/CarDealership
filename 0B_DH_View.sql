@@ -118,7 +118,6 @@ LEFT JOIN
     BODEGAS_UBICACION BUP ON 
         rf.UBICACION = BUP.UBICACION 
         AND rf.bodega = BUP.bodega
---order by vhm.codigo,dent.fecha_hora
 
 
 
