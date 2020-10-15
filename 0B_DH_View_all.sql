@@ -28,7 +28,6 @@ where
     --and vh.codigo in (select distinct codigo from documentos_lin where tipo in ('DCVU','DCV'))
 order by s.bodega desc
 --***************************************************************
---***************************************************************
 SELECT 
     VH.MODELO
     ,VH.des_modelo
