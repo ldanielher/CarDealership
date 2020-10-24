@@ -1,4 +1,17 @@
---- Sales for SSRS REports
+-- ===============================================================
+-- Author:          /Daniel Hernandez
+-- Create date:     /October - 2019
+-- Description:     /Dataset listing vehicles sales each month
+-- Access Level:    /Billing assistant, Stores Managers, Vice and CEO
+-- Return:      
+--      1. Explicit data of the vehicle (Brand, Model, colour, etc)
+--      2. Billing document 
+--      3. Sale advisor 
+--      4. Sale Store
+-- Filters:
+--      1. Document prefix
+--      2. Year - Month
+-- ===============================================================
 SELECT * FROM
 (
 SELECT 
@@ -8,7 +21,7 @@ SELECT
 	,D.Fecha
 	,T.NOMBRES AS Vendedor
 	,CASE 
-		WHEN T.NIT IN (79145114) THEN 'VENTAS GERENCIA' 
+		WHEN T.NIT IN ('XXXXXXXXX') THEN 'VENTAS GERENCIA' 
 		WHEN d.tipo = 'VU' then 'USADOS' 
 		WHEN d.tipo = 'VP' then 'PEUGEOT'
 		WHEN D.modelo = '*' THEN 'AV 116' 
@@ -30,7 +43,6 @@ WHERE
 	D.TIPO in ('V','VP','VU')
 	AND D.ANULADO = 0
 	AND year(D.FECHA) = 2019 and month(D.FECHA) = 9
-	--AND year(D.FECHA) = (@Ano) and month(D.FECHA) = (@Mes)
 
 UNION ALL
 SELECT 
@@ -52,7 +64,6 @@ LEFT JOIN TERCEROS T ON D.VENDEDOR = T.NIT
 WHERE 
 	D.TIPO = 'G' and l.codigo = 'ACTIVO FIJO'
 	AND D.ANULADO = 0
-	--AND year(D.FECHA) = (@Ano) and month(D.FECHA) = (@Mes)
 	AND year(D.FECHA) = 2019 and month(D.FECHA) = 9
 )ZZ
 ORDER BY 
@@ -63,53 +74,3 @@ ORDER BY
 		WHEN tipo = 'G' THEN 4
 	END
 	,fecha
-
---******
-select 
-    tipo
-    ,mes
-    ,avg(cantidad) as cantidad
-    ,avg(valor_total) as promedio
-from
-(
-    SELECT 
-        d.tipo
-        ,year(D.Fecha) as ano
-        ,month(d.fecha) as mes
-        ,cast(sum(D.VALOR_TOTAL) as money) as Valor_total
-        ,count(d.tipo) as Cantidad
-    FROM DOCUMENTOS D
-    WHERE 
-        D.TIPO in ('V','VU','VP')
-        AND D.ANULADO = 0
-        --AND year(D.FECHA) = 2019 --and month(D.FECHA) = month(getdate())
-    GROUP by 
-        d.tipo
-        ,year(D.Fecha) 
-        ,month(d.fecha)
-	
-	UNION ALL
-	SELECT 
-        d.tipo
-        ,year(D.Fecha) as ano
-        ,month(d.fecha) as mes
-        ,cast(sum(D.VALOR_TOTAL) as money) as Valor_total
-        ,count(d.tipo) as Cantidad
-    FROM DOCUMENTOS D
-	LEFT JOIN DOCUMENTOS_LIN L ON D.TIPO = L.TIPO AND D.NUMERO = L.NUMERO
-    WHERE 
-		D.TIPO = 'G' and l.codigo = 'ACTIVO FIJO'
-        AND D.ANULADO = 0
-    GROUP by 
-        d.tipo
-        ,year(D.Fecha) 
-        ,month(d.fecha)
-    
-    
-)x
-where 
-    mes = 9--month(getdate())
-    and x.ano in (year(getdate())-3,year(getdate())-2,year(getdate())-1)
-group by tipo,mes
-ORDER BY tipo,mes
-

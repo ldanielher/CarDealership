@@ -1,5 +1,13 @@
----**** ORIGINAL ******
-
+-- ===============================================================
+-- Author:      /Daniel Hernandez
+-- Create date: /September - 2019
+-- Description: /View that list all the vehicles in history
+-- Return:      
+--      1. Explicit data of the vehicle (VIN, Brand, Model, etc)
+--      2. Ubication and available stock in each store
+--      3. Status of the vehicle in the sale process
+--      4. Movement data (Docs, store, dates, etc)
+-- ===============================================================
 CREATE VIEW [dbo].[v_vehiculos_master_mov_DH] AS
 select 
     VH.CODIGO AS VIN
@@ -22,14 +30,14 @@ select
     END AS Tipo_Vehiculo
     ,CASE 
         WHEN 
-        VH.grupo='D' --------------------------------------/ Grupo del vehiculo es 'D' = Activo fijo
+        VH.grupo='D' --------------------------------------/ 'D' = Activo fijo
         THEN 
         case
-            when dsal.sw = '11' ---------------------------/ Sw del documento de salida es 11 (Salidas Inv)
+            when dsal.sw = '11' ---------------------------/ Si es una Salida de Inventario
             then 'ACTIVO FIJO' 
             else 
-                CASE WHEN   dsal.nit = 'XXXXXXXXX' ------------------------/ El doc de salida tiene un Nit especifico
-                            and vhd.numero_ent is null --------------------/ No tiene devolucion (Casos en que se devuelve el vehiculo y el siguiente mov es el que debe quedar)
+                CASE WHEN   dsal.nit = 'XXXXXXXXX' --------/ El doc de salida tiene un Nit especifico
+                            and vhd.numero_ent is null ----/ No tiene devolucion (Casos en que se devuelve el vehiculo y el siguiente mov es el que debe quedar)
                 THEN 'ACTIVO FIJO'
                 ELSE 'FACTURADO CON DEVOLUCION'
                 END
@@ -80,7 +88,7 @@ select
 from v_vehiculos_mov_DH vhm
 LEFT JOIN documentos dent on dent.tipo = vhm.tipo_ent and dent.numero = vhm.numero_ent --**** Documento de Entrada del movimiento
 LEFT JOIN documentos dsal on dsal.tipo = vhm.tipo_sal and dsal.numero = vhm.numero_sal --**** Documento de Salida del movimiento
-left join V_VH_VEHICULOS VH on vhm.codigo = vh.codigo --- Datos del vehiculo 
+left join V_VH_VEHICULOS VH on vhm.codigo = vh.codigo ----- Datos del vehiculo 
 left join V_REFERENCIAS_STO_HOY sto on  ------------------- Stock actual del vehiculo
             vhm.codigo = sto.codigo 
             and stock > 0
@@ -118,7 +126,5 @@ LEFT JOIN
     BODEGAS_UBICACION BUP ON 
         rf.UBICACION = BUP.UBICACION 
         AND rf.bodega = BUP.bodega
-
-
 
 GO

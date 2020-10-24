@@ -1,3 +1,18 @@
+-- ===============================================================
+-- Author:          /Daniel Hernandez
+-- Create date:     /September - 2019
+-- Description:     /Dataset listing vehicles in stock
+-- Access Level:    /Stores Managers, Vice and CEO
+-- Return:      
+--      1. Explicit data of the vehicle (VIN, Brand, Model, etc)
+--      2. Ubication and stock
+--      3. Status an data of the vehicle in the sale process
+--      4. Costs and taxes of vehicles   
+-- Filters:
+--      1. Vehicle Type (Used, New)
+--      2. Vehicle Brand 
+--      3. Ubication in Store
+-- ===============================================================
 SELECT  
     v.Bodega
     ,v.Modelo
@@ -43,30 +58,5 @@ WHERE
     and V.ESTADO not in ('NA','FACTURADO ENTREGADO','SALIO DEL INVENTARIO','FACTURADO CON DEVOLUCION','ACTIVO FIJO')
     AND V.MARCA  = 'PEUGEOT'
     and v.bodega in ('6','17')
-    and vr.codigo is null
-ORDER BY V.fecha_ent
-
-
---******************************************
-SELECT 
-    V.fecha_ent as Disponible_desde
-    ,v.Bodega
-    ,v.Cod_Modelo
-    ,V.VIN
-    ,V.Descripcion
-    ,V.Modelo_ano
-    ,V.Color
-    ,V.Estado
-    ,V.Negocio
-    ,(select t.nombres from vh_documentos_ped vhp, terceros t where vhp.vendedor=t.nit and vhp.numero=v.negocio ) as Asesor
-    ,V.Placa
-    ,V.Ubicacion
-FROM v_vehiculos_master_mov_DH V
-left join v_vh_vehiculos_reservados vr on v.vin = vr.codigo 
-WHERE 
-    V.PLAN_VENTA = 1 
-    AND V.ESTADO not in ('NA','FACTURADO ENTREGADO','SALIO DEL INVENTARIO','FACTURADO CON DEVOLUCION','ACTIVO FIJO')
-    AND V.MARCA  <> 'PEUGEOT'
-    and v.bodega = '6'
     and vr.codigo is null
 ORDER BY V.fecha_ent
