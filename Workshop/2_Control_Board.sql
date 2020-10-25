@@ -7,7 +7,7 @@
 --      1. Data of the appointment (Id, time, channel, etc)
 --      2. Client Vehicle data (Client, Vehicle, license plate)
 --      3. Notes from Advisor
---      4. Arrival time and Status flag
+--      4. "Arrival time" and "Status" flags
 -- Filters:
 --      1. Workshop (Location)
 -- ===============================================================
