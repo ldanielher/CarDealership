@@ -9,9 +9,7 @@
 --      3. Status an data of the vehicle in the sale process
 --      4. Costs and taxes of vehicles   
 -- Filters:
---      1. Vehicle Type (Used, New)
---      2. Vehicle Brand 
---      3. Ubication in Store
+--      None
 -- ===============================================================
 SELECT  
     v.Bodega
@@ -56,7 +54,6 @@ left join
 WHERE 
     V.PLAN_VENTA = 1 
     and V.ESTADO not in ('NA','FACTURADO ENTREGADO','SALIO DEL INVENTARIO','FACTURADO CON DEVOLUCION','ACTIVO FIJO')
-    AND V.MARCA  = 'PEUGEOT'
-    and v.bodega in ('6','17')
+    and v.bodega in ('6','9','17')
     and vr.codigo is null
 ORDER BY V.fecha_ent

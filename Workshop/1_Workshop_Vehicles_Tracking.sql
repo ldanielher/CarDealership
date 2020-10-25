@@ -2,7 +2,7 @@
 -- Author:          /Daniel Hernandez
 -- Create date:     /November - 2019
 -- Description:     /Dataset listing active orders in workshop
--- Access Level:    /Advisors, Workshop Manager, Vice and CEO
+-- Access Level:    /Advisors, Workshop Managers, Vice and CEO
 -- Return:      
 --      1. Explicit data of the vehicle (Brand, Model, VIN, etc)
 --      2. Order data (Client, Checklist, Responses, etc)

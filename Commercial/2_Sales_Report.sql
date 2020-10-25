@@ -9,8 +9,7 @@
 --      3. Sale advisor 
 --      4. Sale Store
 -- Filters:
---      1. Document prefix
---      2. Year - Month
+--      1. Year - Month
 -- ===============================================================
 SELECT * FROM
 (
@@ -42,7 +41,7 @@ LEFT JOIN TERCEROS TP ON TP.NIT=VDP.NIT_PRENDA
 WHERE 
 	D.TIPO in ('V','VP','VU')
 	AND D.ANULADO = 0
-	AND year(D.FECHA) = 2019 and month(D.FECHA) = 9
+	AND year(D.FECHA) = (@year)) and month(D.FECHA) = (@month))
 
 UNION ALL
 SELECT 
