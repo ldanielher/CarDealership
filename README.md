@@ -6,9 +6,6 @@ Back then, I was able to install and configure the Reporting Services Environmen
 In this repository you can find the code beneath all the reports created for Reporting Services, organized in this categories:
 * Commercial
 * Workshop
-* Accounting
-* Digital
-* Management
 
 It's my very first approach to Github. Please be gentle :sweat_smile:
 
